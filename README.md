@@ -1,6 +1,6 @@
 ## common_trajectories
 
-This repository contains some more **common trajectories**. The title of each file should give you some ideas of what kind of trajectory could be generated.
+This repository contains some of the more **common trajectories**. The title of each file should give you some ideas of what kind of trajectory could be generated.
 
 ## Installation
 
