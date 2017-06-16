@@ -7,25 +7,29 @@ close all
 % this case: initial/final position, initial/final velocity and
 % initial/final accelleration
 
-syms t1 t0 b0 b1 b2 b3 b4 b5 q0 v0 a0 q1 v1 a1;
-A = [1 0 0 0 0 0; 0 1 0 0 0 0; 0 0 2 0 0 0; 1 (t1-t0) (t1-t0)^2 (t1-t0)^3 (t1-t0)^4 (t1-t0)^5; 0 1 2*(t1-t0) 3*(t1-t0)^2 4*(t1-t0)^3 5*(t1-t0)^4; 0 0 2 6*(t1-t0) 12*(t1-t0)^2 20*(t1-t0)^3];
+syms t1 t0 b0 b1 b2 b3 b4 b5 q0 v0 j0 q1 v1 j1;
+A = [1 0 0 0 0 0; 0 1 0 0 0 0; 0 0 0 6 0 0; 1 (t1-t0) (t1-t0)^2 (t1-t0)^3 (t1-t0)^4 (t1-t0)^5; 0 1 2*(t1-t0) 3*(t1-t0)^2 4*(t1-t0)^3 5*(t1-t0)^4; 0 0 0 6 24*(t1-t0) 60*(t1-t0)^2];
 B = [b0; b1; b2; b3; b4; b5];
-C = [q0; v0; a0; q1; v1; a1];
+C = [q0; v0; j0; q1; v1; j1];
 solB = solve(A*B==C, B);
 
-time = 0:0.001:0.25;
+time = 0:0.1:8;
 
 % Pol evaluation (boarder limitations)
-q0=1.225; q1=0.00; v0=0; v1=0; a0=0; a1=0; t0=0; t1=0.25; 
-p_coeffB = [eval(solB.b5) eval(solB.b4) eval(solB.b3) eval(solB.b2) eval(solB.b1) eval(solB.b0)]
+q0=0; q1=10; v0=0; v1=0; j0=0; j1=0; t0=0; t1=8; 
+p_coeffB = [eval(solB.b5) eval(solB.b4) eval(solB.b3) eval(solB.b2) eval(solB.b1) eval(solB.b0)];
+p_coeff3rd = [-0.0391 0.4688 0 0];
 
 % Position
 positionB = polyval(p_coeffB, time);
+position3rd = polyval(p_coeff3rd, time);
 figure('Name','Position','NumberTitle','off')
 %subplot(3,1,1)
 hold on
 plot(time, positionB)
+plot(time, position3rd)
 grid
+legend('5th','3rd','Location','southwest')
 hold off
 
 % Velocity
